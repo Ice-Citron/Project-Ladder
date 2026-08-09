@@ -1,0 +1,3 @@
+[submodule "extern/aic"]
+	path = extern/aic
+	url = https://github.com/intrinsic-dev/aic.git
