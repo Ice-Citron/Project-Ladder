@@ -1,3 +1,3 @@
-[submodule "extern/aic"]
+[submodule "submodules/aic"]
 	path = submodules/aic
-	url = https://github.com/intrinsic-dev/aic.git
+	url = https://github.com/Ice-Citron/aic-scratchpad.git
