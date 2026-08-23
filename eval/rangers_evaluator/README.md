@@ -296,4 +296,4 @@ Do not build separate MuJoCo and Isaac evaluators unless there is an explicit re
 
 1. train in Isaac Sim if desired
 2. wrap the checkpoint in an AIC policy class
-3. benchmark it here in Gazebo 
+3. benchmark it here in Gazebo
