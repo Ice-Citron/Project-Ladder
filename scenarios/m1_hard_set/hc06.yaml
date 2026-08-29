@@ -1,20 +1,17 @@
-# hc06 — AXIS 7: target-position extreme — SC target at the FAR end of its rail.
-# What this config tries to do: move the TARGET, not the obstacles. The SC
-#   mount slides from -0.055 (sample) to +0.055 (max bound), 11 cm along the
-#   rail. Two cards sit at the official nominal position (0.005, from
-#   eval_config.yaml). Tests if the new plug-to-port diagonal finds these
-#   previously-safe card positions on its own.
-# Expected stock failure: snag on rail 1 or 2 — the shifted corridor should
-#   cross near the card centers; open prediction, this tests if the per-rail
-#   bad-band map generalizes across target positions.
-# Changed vs sample_config.yaml (trial_3 base):
-#   sc_rail_1 (sc_mount_1) translation: -0.055 -> 0.055 (at max bound)
-#   nic_rail_1.entity_present: False -> True ("nic_card_1", translation 0.005)
-#   nic_rail_2.entity_present: False -> True ("nic_card_2", translation 0.005)
-# Legal bounds check: sc_rail 0.055 at max of -0.06..0.055; nic 0.005 inside
-#   -0.0215..0.0234. The engine clamps translations anyway (aic_engine.cpp:1825).
-# NOTE: verify visually that the port now sits at the other end of its rail
-#   and that the descent diagonal passes over or between the two cards.
+# hc06 — RUN PENDING. Axis: target sweep, third point.
+# Scene: sample trial_3 (SC insertion). The hc05 card pair stays fixed
+#   (rail 1 at 0.0234, rail 2 at 0.0). The target moves to 0.055, the far
+#   end of its rail.
+# Series: same cards, target swept. At -0.055 stock scored 34.99 (hc05).
+#   At 0.0 stock scored 24.46 (hc08). This config sets the third point.
+# Expected failure: early snag, as in hc08.
+# Changes vs sample_config.yaml trial_3:
+#   sc_rail_1 ("sc_mount_1"): -0.055 -> 0.055
+#   nic_rail_1: absent -> "nic_card_1" at 0.0234
+#   nic_rail_2: absent -> "nic_card_2" at 0.0
+# Bounds: 0.055 is at the max of -0.06..0.055; 0.0234 is at the max of
+#   -0.0215..0.0234; 0.0 is inside.
+# NOTE: report where the cable catches, and how far the plug gets.
 
 scoring:
   topics:
@@ -78,7 +75,7 @@ trials:
             entity_present: True
             entity_name: "nic_card_1"
             entity_pose:
-              translation: 0.005
+              translation: 0.0234
               roll: 0.0
               pitch: 0.0
               yaw: 0.0
@@ -86,7 +83,7 @@ trials:
             entity_present: True
             entity_name: "nic_card_2"
             entity_pose:
-              translation: 0.005
+              translation: 0.0
               roll: 0.0
               pitch: 0.0
               yaw: 0.0

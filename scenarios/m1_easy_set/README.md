@@ -12,3 +12,5 @@ benchmark sweep.
 | ec04.yaml | SFP | neighbor cards wall in the target | 92.93 |
 | ec05.yaml | SFP | one card in the drag corridor | 93.19 |
 | ec06.yaml | SFP | two-card wall before the edge target | 93.09 |
+| ec07.yaml | SC | target at far end (+0.055), two cards at 0.005 | 93.18 |
+| ec08.yaml | SC | board yaw -1.8, eval_config trial_3 verbatim | 92.98 |

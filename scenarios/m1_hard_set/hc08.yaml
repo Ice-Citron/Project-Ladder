@@ -1,20 +1,17 @@
-# hc08 — AXIS 9: band-map generalization — hc05's card pair, target moved.
-# What this config tries to do: keep the two certified snag cards exactly
-#   where hc05 put them (rail 1 at 0.0234, rail 2 at 0.0 — together 34.99,
-#   no insertion) and slide only the TARGET from -0.055 to 0.0 (mid-rail).
-#   If the bad bands are target-relative, both cards become MARGINAL for the
-#   new diagonal and we test whether two marginal catches compound.
-# Expected stock failure: open prediction, that is the point. Fail = two
-#   marginal catches compound into an unrecoverable snag. Pass = the band
-#   map is target-specific, which bounds our corridor model.
-# Changed vs sample_config.yaml (trial_3 base):
-#   sc_rail_1 (sc_mount_1) translation: -0.055 -> 0.0 (mid-rail)
-#   nic_rail_1.entity_present: False -> True ("nic_card_1", translation 0.0234)
-#   nic_rail_2.entity_present: False -> True ("nic_card_2", translation 0.0)
-# Legal bounds check: sc_rail 0.0 inside -0.06..0.055; nic 0.0234 at max,
-#   0.0 inside -0.0215..0.0234. Engine clamps anyway (aic_engine.cpp:1825).
-# NOTE: verify visually where the new diagonal crosses rails 1 and 2
-#   relative to the two cards; report the clearance you see.
+# hc08 — CERTIFIED-HARD. Stock scored 24.46: no insertion, 0.05 m short.
+#   This is the lowest stock score in the set.
+# Scene: sample trial_3 (SC insertion). The card pair stays where hc05 put
+#   it (rail 1 at 0.0234, rail 2 at 0.0). Only the target moves, from
+#   -0.055 to 0.0 (mid-rail).
+# Failure seen: the cable caught the cards early. Little free cable
+#   remained, so the plug stayed far off to the side. The bad bands held
+#   for the new target position, so the band map is not target-specific.
+# Changes vs sample_config.yaml trial_3:
+#   sc_rail_1 ("sc_mount_1"): -0.055 -> 0.0
+#   nic_rail_1: absent -> "nic_card_1" at 0.0234
+#   nic_rail_2: absent -> "nic_card_2" at 0.0
+# Bounds: 0.0234 is at the max of -0.0215..0.0234; 0.0 is inside.
+
 
 scoring:
   topics:
