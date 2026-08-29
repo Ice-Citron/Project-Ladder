@@ -7,8 +7,7 @@
 # Changed vs sample_config.yaml (trial_3 base):
 #   nic_rail_2.entity_present: False -> True (card "nic_card_2", translation 0.0)
 # Legal bounds check: nic_rail translation 0.0 inside -0.0215..0.0234
-# NOTE: confirm visually that nic_card_2 truly stands in the approach path.
-#   If not, the fallback rails are nic_rail_1 (hc02) and the pair in hc03.
+
 
 scoring:
   topics:

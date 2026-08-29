@@ -7,7 +7,7 @@
 # Changed vs sample_config.yaml (trial_3 base):
 #   nic_rail_1.entity_present: False -> True (card "nic_card_1", translation 0.0234)
 # Legal bounds check: nic_rail translation 0.0234 inside -0.0215..0.0234 (at max)
-# NOTE: confirm visually where nic_card_1 stands relative to the arm's path.
+
 
 scoring:
   topics:

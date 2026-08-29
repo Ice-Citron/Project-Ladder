@@ -8,8 +8,7 @@
 #   nic_rail_1.entity_present: False -> True (card "nic_card_1", translation 0.0)
 #   nic_rail_3.entity_present: False -> True (card "nic_card_3", translation 0.0)
 # Legal bounds check: nic_rail translations 0.0 inside -0.0215..0.0234
-# NOTE: if the wall never touches the cable path, report which side the arm
-#   passes on; the values move in the next iteration.
+
 
 scoring:
   topics:

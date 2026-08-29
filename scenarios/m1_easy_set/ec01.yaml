@@ -1,18 +1,13 @@
-# hc05 — AXIS 1 variant: staggered pair on the corridor line.
-# What this config tries to do: close the cable's drag corridor from both
-#   sides with two individually certified snag points — rail 1 at 0.0234
-#   (exact hc02 position, hard fail 37.06) and rail 2 at 0.0 (exact hc01
-#   position, partial 61.65). Distinct from hc03 (rails 1+3, both center)
-#   and hc04 (dense forest).
-# Expected stock failure: snag with no recovery room; no insertion.
-# (v4 of hc05. v1 "board yaw": never run, judged easy — GT hands stock the
-#  full 6-DOF port pose. v2 "rail 1 at min bound": PASSED 92.65. v3 "rail 2
-#  at max bound": PASSED 91.38
+# ec01 — EASY: far-side arm start, free path (was hc04-v1 "arm opposite").
+# What this config is: sample trial_3 (SC insertion) with no obstacles and
+#   the arm's home shoulder_pan rotated by +pi, so the arm starts on the
+#   opposite side of the board. Stock passed with 92.73/100 on 2026-08-26
+# Why it is easy: ground truth hands stock the full 6-DOF port pose, so
+#   start pose and orientation cost it nothing; only corridor obstacles hurt.
 # Changed vs sample_config.yaml (trial_3 base):
-#   nic_rail_1.entity_present: False -> True ("nic_card_1", translation 0.0234)
-#   nic_rail_2.entity_present: False -> True ("nic_card_2", translation 0.0)
-# Legal bounds check: 0.0234 at max of -0.0215..0.0234; 0.0 inside bounds
-
+#   robot.home_joint_positions.shoulder_pan_joint: -0.1597 -> 2.9819 (+pi)
+# Legal bounds check: no rail entities added; sc_rail -0.055 inside
+#   -0.06..0.055; mounts inside -0.09425..0.09425
 
 scoring:
   topics:
@@ -73,21 +68,9 @@ trials:
           nic_rail_0:
             entity_present: False
           nic_rail_1:
-            entity_present: True
-            entity_name: "nic_card_1"
-            entity_pose:
-              translation: 0.0234
-              roll: 0.0
-              pitch: 0.0
-              yaw: 0.0
+            entity_present: False
           nic_rail_2:
-            entity_present: True
-            entity_name: "nic_card_2"
-            entity_pose:
-              translation: 0.0
-              roll: 0.0
-              pitch: 0.0
-              yaw: 0.0
+            entity_present: False
           nic_rail_3:
             entity_present: False
           nic_rail_4:
@@ -157,7 +140,7 @@ trials:
 
 robot:
   home_joint_positions:
-    shoulder_pan_joint: -0.1597
+    shoulder_pan_joint: 2.9819
     shoulder_lift_joint: -1.3542
     elbow_joint: -1.6648
     wrist_1_joint: -1.6933
