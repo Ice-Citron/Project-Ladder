@@ -1,20 +1,26 @@
-# hc06 — CERTIFIED-HARD. Stock scored 23.05: no insertion, 0.06 m short.
-#   This is the lowest stock score in the set.
-# Scene: sample trial_3 (SC insertion). The hc05 card pair stays fixed
-#   (rail 1 at 0.0234, rail 2 at 0.0). The target sits at 0.055, the far
-#   end of its rail.
-# Series: same cards, target swept. Scores fall as the target moves away:
-#   -0.055 -> 34.99 (hc05); 0.0 -> 24.46 (hc08); 0.055 -> 23.05 (hc06).
-# Failure seen: the cable caught a card early. The stuck point then acts as
-#   the center of a circle, and the free cable length is the radius. Each
-#   move down needs a move inward, toward the stuck point. The arm could
-#   not do both, so it failed completely.
-# Changes vs sample_config.yaml trial_3:
-#   sc_rail_1 ("sc_mount_1"): -0.055 -> 0.055
-#   nic_rail_1: absent -> "nic_card_1" at 0.0234
-#   nic_rail_2: absent -> "nic_card_2" at 0.0
-# Bounds: 0.055 is at the max of -0.06..0.055; 0.0234 is at the max of
-#   -0.0215..0.0234; 0.0 is inside.
+# hc09 — CERTIFIED-HARD. Stock scored 42.24: no insertion, 0.02 m short.
+# Scene: eval_config.yaml trial_3 base (board yaw -1.8). Two changes: the
+#   SC target moves from -0.04 to 0.055, the far end of its rail, and all
+#   five nic rails carry a card, at staggered positions.
+# Why this design: on the rotated board, two runs found no card in the
+#   path (ec08 stock start, ec09 far start). This config removes every
+#   clear lane: the picket covers all rail positions, and the far target
+#   forces a long transit (the sweep shows far targets kill the score:
+#   34.99 -> 24.46 -> 23.05).
+# History: v1 (eval trial_3 verbatim) passed 92.98 = ec08. v2 (v1 + far
+#   start) passed 92.99 = ec09.
+# Failure seen: the cable got stuck between nic_card_1 and nic_card_2
+#   (lower number = nearer the SC port). The same tangle mechanism held it
+#   there. No clear lane exists on a full board.
+# Changes vs eval_config.yaml trial_3:
+#   sc_rail_1 ("sc_mount_1"): -0.04 -> 0.055
+#   nic_rail_0: 0.005 -> 0.0234
+#   nic_rail_1: 0.005 -> 0.0117
+#   nic_rail_2: 0.005 -> 0.0
+#   nic_rail_3: absent -> "nic_card_3" at -0.01
+#   nic_rail_4: absent -> "nic_card_4" at -0.0215
+# Bounds: 0.055 is at the max of -0.06..0.055; nic values are inside
+#   -0.0215..0.0234, with both ends at the bounds.
 
 scoring:
   topics:
@@ -66,19 +72,25 @@ trials:
     scene:
         task_board:
           pose:
-            x: 0.17
-            y: 0.0
+            x: 0.2
+            y: -0.15
             z: 1.14
             roll: 0.0
             pitch: 0.0
-            yaw: 3.0
+            yaw: -1.8
           nic_rail_0:
-            entity_present: False
+            entity_present: True
+            entity_name: "nic_card_0"
+            entity_pose:
+              translation: 0.0234
+              roll: 0.0
+              pitch: 0.0
+              yaw: 0.0
           nic_rail_1:
             entity_present: True
             entity_name: "nic_card_1"
             entity_pose:
-              translation: 0.0234
+              translation: 0.0117
               roll: 0.0
               pitch: 0.0
               yaw: 0.0
@@ -91,11 +103,29 @@ trials:
               pitch: 0.0
               yaw: 0.0
           nic_rail_3:
-            entity_present: False
+            entity_present: True
+            entity_name: "nic_card_3"
+            entity_pose:
+              translation: -0.01
+              roll: 0.0
+              pitch: 0.0
+              yaw: 0.0
           nic_rail_4:
-            entity_present: False
+            entity_present: True
+            entity_name: "nic_card_4"
+            entity_pose:
+              translation: -0.0215
+              roll: 0.0
+              pitch: 0.0
+              yaw: 0.0
           sc_rail_0:
-            entity_present: False
+            entity_present: True
+            entity_name: "sc_mount_0"
+            entity_pose:
+              translation: 0.0
+              roll: 0.0
+              pitch: 0.0
+              yaw: 0.0
           sc_rail_1:
             entity_present: True
             entity_name: "sc_mount_1"
@@ -148,7 +178,7 @@ trials:
             cable_type: "sfp_sc_cable_reversed"
     tasks:
       task_1:
-        cable_type: "sfp_sc"
+        cable_type: "sfp_sc_cable_reversed"
         cable_name: "cable_1"
         plug_type: "sc"
         plug_name: "sc_tip"

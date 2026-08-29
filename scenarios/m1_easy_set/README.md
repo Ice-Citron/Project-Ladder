@@ -14,3 +14,4 @@ benchmark sweep.
 | ec06.yaml | SFP | two-card wall before the edge target | 93.09 |
 | ec07.yaml | SC | target at far end (+0.055), two cards at 0.005 | 93.18 |
 | ec08.yaml | SC | board yaw -1.8, eval_config trial_3 verbatim | 92.98 |
+| ec09.yaml | SC | board yaw -1.8 + far arm start (+pi) | 92.99 |

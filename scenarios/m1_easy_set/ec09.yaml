@@ -1,20 +1,13 @@
-# hc06 — CERTIFIED-HARD. Stock scored 23.05: no insertion, 0.06 m short.
-#   This is the lowest stock score in the set.
-# Scene: sample trial_3 (SC insertion). The hc05 card pair stays fixed
-#   (rail 1 at 0.0234, rail 2 at 0.0). The target sits at 0.055, the far
-#   end of its rail.
-# Series: same cards, target swept. Scores fall as the target moves away:
-#   -0.055 -> 34.99 (hc05); 0.0 -> 24.46 (hc08); 0.055 -> 23.05 (hc06).
-# Failure seen: the cable caught a card early. The stuck point then acts as
-#   the center of a circle, and the free cable length is the radius. Each
-#   move down needs a move inward, toward the stuck point. The arm could
-#   not do both, so it failed completely.
-# Changes vs sample_config.yaml trial_3:
-#   sc_rail_1 ("sc_mount_1"): -0.055 -> 0.055
-#   nic_rail_1: absent -> "nic_card_1" at 0.0234
-#   nic_rail_2: absent -> "nic_card_2" at 0.0
-# Bounds: 0.055 is at the max of -0.06..0.055; 0.0234 is at the max of
-#   -0.0215..0.0234; 0.0 is inside.
+# ec09 — EASY. Was hc09-v2. Stock passed: 92.99 (2026-08-30).
+# Scene: eval_config.yaml trial_3 (board yaw -1.8, three cards at 0.005,
+#   SC target on sc_rail_1 at -0.04) with the arm start on the far side
+#   (shoulder_pan +pi).
+# Why easy: even from the far side, the drag path did not cross the cards
+#   on the rotated board. Rotation alone (ec08) and rotation with a far
+#   start both pass. Under ground truth, rotation is a weak axis.
+# Changes vs eval_config.yaml trial_3:
+#   robot.home_joint_positions.shoulder_pan_joint: -0.1597 -> 2.9819 (+pi)
+# Bounds: organizer scene values, inside all limits.
 
 scoring:
   topics:
@@ -66,19 +59,25 @@ trials:
     scene:
         task_board:
           pose:
-            x: 0.17
-            y: 0.0
+            x: 0.2
+            y: -0.15
             z: 1.14
             roll: 0.0
             pitch: 0.0
-            yaw: 3.0
+            yaw: -1.8
           nic_rail_0:
-            entity_present: False
+            entity_present: True
+            entity_name: "nic_card_0"
+            entity_pose:
+              translation: 0.005
+              roll: 0.0
+              pitch: 0.0
+              yaw: 0.0
           nic_rail_1:
             entity_present: True
             entity_name: "nic_card_1"
             entity_pose:
-              translation: 0.0234
+              translation: 0.005
               roll: 0.0
               pitch: 0.0
               yaw: 0.0
@@ -86,7 +85,7 @@ trials:
             entity_present: True
             entity_name: "nic_card_2"
             entity_pose:
-              translation: 0.0
+              translation: 0.005
               roll: 0.0
               pitch: 0.0
               yaw: 0.0
@@ -95,12 +94,18 @@ trials:
           nic_rail_4:
             entity_present: False
           sc_rail_0:
-            entity_present: False
+            entity_present: True
+            entity_name: "sc_mount_0"
+            entity_pose:
+              translation: 0.0
+              roll: 0.0
+              pitch: 0.0
+              yaw: 0.0
           sc_rail_1:
             entity_present: True
             entity_name: "sc_mount_1"
             entity_pose:
-              translation: 0.055
+              translation: -0.04
               roll: 0.0
               pitch: 0.0
               yaw: 0.0
@@ -148,7 +153,7 @@ trials:
             cable_type: "sfp_sc_cable_reversed"
     tasks:
       task_1:
-        cable_type: "sfp_sc"
+        cable_type: "sfp_sc_cable_reversed"
         cable_name: "cable_1"
         plug_type: "sc"
         plug_name: "sc_tip"
@@ -159,7 +164,7 @@ trials:
 
 robot:
   home_joint_positions:
-    shoulder_pan_joint: -0.1597
+    shoulder_pan_joint: 2.9819
     shoulder_lift_joint: -1.3542
     elbow_joint: -1.6648
     wrist_1_joint: -1.6933
