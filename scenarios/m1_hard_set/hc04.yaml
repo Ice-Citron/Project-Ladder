@@ -1,22 +1,20 @@
-# hc04 — AXIS 6: dense forest — cards AND mounts, target in the middle.
-# What this config tries to do: fill the board. Three NIC cards (rails 1,2,3)
-#   plus four mounts stand on the board, and the target SC port sits inside
-#   that forest. Stock must thread the cable through a crowded field.
-# Expected stock failure: snag on one of the cards or mounts, from any
-#   approach side; blocked descent corridor.
-# (v3 of hc04. v1 "arm opposite" scored 92.73 PASS; v2 "weak dense" scored
-#  92.77 PASS — both runs parked in Personal_Miscellaneous/2026-08-26/.
-#  Lesson: only real obstacles in or near the corridor hurt stock.)
-# Changed vs sample_config.yaml (trial_3 base):
-#   nic_rail_1.entity_present: False -> True ("nic_card_1", translation 0.0)
-#   nic_rail_2.entity_present: False -> True ("nic_card_2", translation 0.0)
-#   nic_rail_3.entity_present: False -> True ("nic_card_3", translation 0.0)
-#   lc_mount_rail_0.entity_present: False -> True ("lc_mount_0", translation -0.05)
-#   sfp_mount_rail_0.entity_pose.translation: 0.05 -> 0.0
-#   sc_mount_rail_0.entity_pose.translation: -0.03 -> -0.09
-#   lc_mount_rail_1.entity_pose.translation: 0.04 -> -0.09
-# Legal bounds check: nic_rail 0.0 inside -0.0215..0.0234; mount_rail -0.09,
-#   -0.09, -0.05, 0.0 all inside -0.09425..0.09425
+# hc04 — CERTIFIED-HARD. Stock scored 41.23: no insertion.
+# Scene: sample trial_3 (SC insertion), dense forest. Cards stand on rails
+#   1, 2 and 3. Four mounts crowd the board. The target port sits in the
+#   middle of the field.
+# Failure seen: the cable caught all three cards. The plug pressed above
+#   the port, off by half a plug width, and could not move down. Force
+#   spike 27.39 N for 0.18 s, no penalty.
+# Changes vs sample_config.yaml trial_3:
+#   nic_rail_1: absent -> "nic_card_1" at 0.0
+#   nic_rail_2: absent -> "nic_card_2" at 0.0
+#   nic_rail_3: absent -> "nic_card_3" at 0.0
+#   lc_mount_rail_0: absent -> "lc_mount_0" at -0.05
+#   sfp_mount_rail_0: 0.05 -> 0.0
+#   sc_mount_rail_0 ("sc_mount_2"): -0.03 -> -0.09
+#   lc_mount_rail_1 ("lc_mount_1"): 0.04 -> -0.09
+# Bounds: nic values are inside -0.0215..0.0234; mount values are inside
+#   -0.09425..0.09425.
 
 
 scoring:

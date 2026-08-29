@@ -1,17 +1,12 @@
-# ec05 (was hc07) — NIC EASY-CONTROL, stock passed 93.19. Original design:
-# What this config tries to do: put one blocker card on rail 3, at the rail
-#   center, meant to sit under the arm's travel from home to the target card
-#   on rail 1. Tests whether the certified SC snag class transfers to the
-#   NIC task at all — here the free-hanging end is the SMALL SC connector,
-#   not the big SFP cage that snagged in hc01-hc05.
-# Expected stock failure: snag — the dangling SC end catches the blocker
-#   card; weaker confidence than the SC cases, an EASY-CONTROL is possible.
-# Task type: NIC (SFP plug into nic_card_mount_1); base = sample trial_2.
-# Changed vs sample_config.yaml (trial_2 base):
-#   nic_rail_1 translation: 0.036 -> 0.0234 (clamp into declared limits)
-#   nic_rail_3.entity_present: False -> True ("nic_card_3", translation 0.0)
-# Legal bounds check: 0.0234 at max of -0.0215..0.0234; 0.0 inside bounds
-
+# ec05 — EASY. Was hc07 (NIC batch). Stock passed: 93.19 (2026-08-29).
+# Scene: sample trial_2 (SFP insertion) with one card on rail 3 at 0.0, in
+#   the drag corridor.
+# Why easy: only the small SC end hangs free, and it did not catch. The
+#   plug made a short stick-slip stop at the port mouth, then it released.
+# Changes vs sample_config.yaml trial_2:
+#   nic_rail_1 (target): 0.036 -> 0.0234 (clamp into the limits)
+#   nic_rail_3: absent -> "nic_card_3" at 0.0
+# Bounds: all values are inside -0.0215..0.0234.
 
 scoring:
   topics:

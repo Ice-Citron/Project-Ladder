@@ -1,14 +1,12 @@
-# ec03 — EASY: NIC card on rail 2 at the MAX bound (was hc05-v3).
-# What this config is: SC insertion (trial_3 base) with one card at rail 2's
-#   maximum translation (0.0234). Designed as a corridor hard case, but
-#   stock PASSED with 91.38/100 on 2026-08-29 
-# Why it is easy: the corridor crosses rail 2 near its CENTER (hc01 snagged
-#   there); the max shift moves the card OUT of that crossing. Together with
-#   ec02 this brackets the corridor: each rail has a narrow band of bad
-#   translations, and the band moves negative as the rail index grows.
-# Changed vs sample_config.yaml (trial_3 base):
-#   nic_rail_2.entity_present: False -> True ("nic_card_2", translation 0.0234)
-# Legal bounds check: nic_rail translation 0.0234 inside -0.0215..0.0234 (at max)
+# ec03 — EASY. Was hc05-v3. Stock passed: 91.38 (2026-08-29).
+# Scene: sample trial_3 (SC insertion) with one card on rail 2 at 0.0234
+#   (max bound).
+# Why easy: the corridor crosses rail 2 near its CENTER (hc01 failed
+#   there). The max shift moves the card out of that band. With ec02 this
+#   brackets the corridor: each rail has a narrow band of bad positions.
+# Changes vs sample_config.yaml trial_3:
+#   nic_rail_2: absent -> "nic_card_2" at 0.0234
+# Bounds: 0.0234 is at the max of -0.0215..0.0234.
 
 scoring:
   topics:

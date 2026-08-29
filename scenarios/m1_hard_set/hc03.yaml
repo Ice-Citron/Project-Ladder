@@ -1,13 +1,12 @@
-# hc03 — AXIS 1: NIC card between arm and target SC port (known stock snag).
-# What this config tries to do: form a wider wall with TWO NIC cards
-#   (nic_rail_1 and nic_rail_3), so the cable cannot pass between rails.
-#   Same axis as hc01/hc02, intensified; no other axis is stacked.
-# Expected stock failure: snag — cable catches one of the cards; no
-#   insertion; possible contact penalty.
-# Changed vs sample_config.yaml (trial_3 base):
-#   nic_rail_1.entity_present: False -> True (card "nic_card_1", translation 0.0)
-#   nic_rail_3.entity_present: False -> True (card "nic_card_3", translation 0.0)
-# Legal bounds check: nic_rail translations 0.0 inside -0.0215..0.0234
+# hc03 — CERTIFIED-HARD. Stock scored 40.34: no insertion, 0.02 m short.
+# Scene: sample trial_3 (SC insertion) with a two-card wall on rails 1 and
+#   3, both at 0.0.
+# Failure seen: the cable caught the wall. The arm pulled the cable nearer
+#   the port than in hc02. Force spike 24.61 N for 0.04 s, no penalty.
+# Changes vs sample_config.yaml trial_3:
+#   nic_rail_1: absent -> "nic_card_1" at 0.0
+#   nic_rail_3: absent -> "nic_card_3" at 0.0
+# Bounds: 0.0 is inside -0.0215..0.0234.
 
 
 scoring:

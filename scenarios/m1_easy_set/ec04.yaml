@@ -1,17 +1,13 @@
-# ec04 (was hc06) — NIC EASY-CONTROL, stock passed 92.93. Original design:
-# What this config tries to do: wall in the target NIC card from both sides
-#   with neighbor cards on rails 0 and 2, both at max translation (0.0234)
-#   so their faces sit flush beside the SFP port. The gripper must descend
-#   into a card-width slot. 
-# Expected stock failure: clearance — the gripper body clashes with a
-#   neighbor card (contact penalty) or cannot seat the plug in the slot.
-# Task type: NIC (SFP plug into nic_card_mount_1); base = sample trial_2.
-# Changed vs sample_config.yaml (trial_2 base):
-#   nic_rail_1 translation: 0.036 -> 0.0234 (clamp into declared limits)
-#   nic_rail_0.entity_present: False -> True ("nic_card_0", translation 0.0234)
-#   nic_rail_2.entity_present: False -> True ("nic_card_2", translation 0.0234)
-# Legal bounds check: all nic translations 0.0234 at max of -0.0215..0.0234
-
+# ec04 — EASY. Was hc06 (NIC batch). Stock passed: 92.93 (2026-08-29).
+# Scene: sample trial_2 (SFP insertion into nic_card_mount_1). Cards on
+#   rails 0 and 2 stand beside the target card. All three sit at 0.0234.
+# Why easy: the SFP port sits high on a tall card, above all obstacles.
+#   The gripper cleared the slot between the neighbor cards.
+# Changes vs sample_config.yaml trial_2:
+#   nic_rail_1 (target): 0.036 -> 0.0234 (clamp into the limits)
+#   nic_rail_0: absent -> "nic_card_0" at 0.0234
+#   nic_rail_2: absent -> "nic_card_2" at 0.0234
+# Bounds: 0.0234 is at the max of -0.0215..0.0234.
 
 scoring:
   topics:

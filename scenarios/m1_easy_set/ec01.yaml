@@ -1,13 +1,11 @@
-# ec01 — EASY: far-side arm start, free path (was hc04-v1 "arm opposite").
-# What this config is: sample trial_3 (SC insertion) with no obstacles and
-#   the arm's home shoulder_pan rotated by +pi, so the arm starts on the
-#   opposite side of the board. Stock passed with 92.73/100 on 2026-08-26
-# Why it is easy: ground truth hands stock the full 6-DOF port pose, so
-#   start pose and orientation cost it nothing; only corridor obstacles hurt.
-# Changed vs sample_config.yaml (trial_3 base):
+# ec01 — EASY. Was hc04-v1 "arm opposite". Stock passed: 92.73 (2026-08-26).
+# Scene: sample trial_3 (SC insertion), no obstacles. The arm starts on the
+#   far side of the board.
+# Why easy: ground truth gives stock the full 6-DOF port pose. The start
+#   pose does not make the task hard. Only obstacles in the corridor do.
+# Changes vs sample_config.yaml trial_3:
 #   robot.home_joint_positions.shoulder_pan_joint: -0.1597 -> 2.9819 (+pi)
-# Legal bounds check: no rail entities added; sc_rail -0.055 inside
-#   -0.06..0.055; mounts inside -0.09425..0.09425
+# Bounds: no rail entities added; all values are inside the limits.
 
 scoring:
   topics:

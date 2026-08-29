@@ -1,12 +1,11 @@
-# hc01 — AXIS 1: NIC card between arm and target SC port (known stock snag).
-# What this config tries to do: put one tall NIC card in the middle of the
-#   board, in the arm's diagonal approach path to the SC port, so the
-#   hanging cable catches on it.
-# Expected stock failure: snag — cable catches the card during approach or
-#   descent; no insertion; possible contact penalty.
-# Changed vs sample_config.yaml (trial_3 base):
-#   nic_rail_2.entity_present: False -> True (card "nic_card_2", translation 0.0)
-# Legal bounds check: nic_rail translation 0.0 inside -0.0215..0.0234
+# hc01 — CERTIFIED-HARD. Stock scored 61.65: partial insertion, 0.01 m short.
+# Scene: sample trial_3 (SC insertion) with one card on rail 2 at 0.0. The
+#   card stands in the path from the arm to the SC port.
+# Failure seen: the cable caught the card. The z-floor was reached with
+#   xy_error below 1 mm. No contact penalty.
+# Changes vs sample_config.yaml trial_3:
+#   nic_rail_2: absent -> "nic_card_2" at 0.0
+# Bounds: 0.0 is inside -0.0215..0.0234.
 
 
 scoring:

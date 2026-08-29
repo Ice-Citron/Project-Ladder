@@ -1,12 +1,11 @@
-# hc02 — AXIS 1: NIC card between arm and target SC port (known stock snag).
-# What this config tries to do: same snag idea as hc01, but the card sits on
-#   nic_rail_1 and is pushed to its maximum legal translation, to block a
-#   different section of the approach corridor.
-# Expected stock failure: snag — cable catches the card during approach or
-#   descent; no insertion; possible contact penalty.
-# Changed vs sample_config.yaml (trial_3 base):
-#   nic_rail_1.entity_present: False -> True (card "nic_card_1", translation 0.0234)
-# Legal bounds check: nic_rail translation 0.0234 inside -0.0215..0.0234 (at max)
+# hc02 — CERTIFIED-HARD. Stock scored 37.06: no insertion, 0.05 m short.
+# Scene: sample trial_3 (SC insertion) with one card on rail 1 at 0.0234
+#   (max bound).
+# Failure seen: the cable caught the card. The arm could not pull the cable
+#   closer. Force spike 23.71 N for 0.52 s, no penalty.
+# Changes vs sample_config.yaml trial_3:
+#   nic_rail_1: absent -> "nic_card_1" at 0.0234
+# Bounds: 0.0234 is at the max of -0.0215..0.0234.
 
 
 scoring:

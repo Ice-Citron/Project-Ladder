@@ -1,18 +1,12 @@
-# ec06 (was hc08) — NIC EASY-CONTROL, stock passed 93.09. Original design:
-# What this config tries to do: target the NIC card on the edge rail 0 and
-#   put a wall of two cards on rails 1 and 2 between the arm and the target.
-#   Combines the corridor-snag chance (dangling SC end over two cards) with
-#   one-sided clearance at the slot next to the wall.
-# Expected stock failure: snag on the wall, or clearance clash at the edge
-#   slot; strongest combined blockage of the NIC batch.
-# Task type: NIC (SFP plug into nic_card_mount_0); base = sample trial_1
-#   (note the trial_1 gripper_offset z 0.04245 — different from trial_2).
-# Changed vs sample_config.yaml (trial_1 base):
-#   nic_rail_0 translation: 0.036 -> 0.0234 (clamp into declared limits)
-#   nic_rail_1.entity_present: False -> True ("nic_card_1", translation 0.0)
-#   nic_rail_2.entity_present: False -> True ("nic_card_2", translation 0.0)
-# Legal bounds check: 0.0234 at max of -0.0215..0.0234; 0.0 inside bounds
-
+# ec06 — EASY. Was hc08 (NIC batch). Stock passed: 93.09 (2026-08-29).
+# Scene: sample trial_1 (SFP insertion into nic_card_mount_0). A two-card
+#   wall stands on rails 1 and 2 at 0.0, before the edge target.
+# Why easy: same result as ec05. No snag and no clash occurred.
+# Changes vs sample_config.yaml trial_1:
+#   nic_rail_0 (target): 0.036 -> 0.0234 (clamp into the limits)
+#   nic_rail_1: absent -> "nic_card_1" at 0.0
+#   nic_rail_2: absent -> "nic_card_2" at 0.0
+# Bounds: all values are inside -0.0215..0.0234.
 
 scoring:
   topics:
