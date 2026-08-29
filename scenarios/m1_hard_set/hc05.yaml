@@ -1,19 +1,23 @@
-# hc05 — AXIS 1 variant: NIC card at the MIN bound, hugging the target side.
-# What this config tries to do: park one card at the rail's minimum legal
-#   translation (-0.0215), the end nearest the target SC port, so the
-#   obstacle sits at the LAST centimeters of the descent corridor instead of
-#   on the route (hc01 center, hc02 max bound, hc03 wall).
-# Expected stock failure: late snag — the cable clears the approach but
-#   catches the card during final descent or seating; partial insertion.
-# (v2 of hc05. v1 "board yaw 2.62" was never run and is judged easy by the
-#  same lesson as hc04-v1/v2: ground truth hands stock the full 6-DOF port
-#  pose, so orientation alone does not hurt it; only obstacles do.)
+# hc05 — AXIS 1 variant: staggered pair on the corridor line.
+# What this config tries to do: close the cable's drag corridor from both
+#   sides with two individually certified snag points — rail 1 at 0.0234
+#   (exact hc02 position, hard fail 37.06) and rail 2 at 0.0 (exact hc01
+#   position, partial 61.65). Distinct from hc03 (rails 1+3, both center)
+#   and hc04 (dense forest).
+# Expected stock failure: snag with no recovery room; no insertion.
+# (v4 of hc05. v1 "board yaw": never run, judged easy — GT hands stock the
+#  full 6-DOF port pose. v2 "rail 1 at min bound": PASSED 92.65. v3 "rail 2
+#  at max bound": PASSED 91.38. Corridor model from the 5 single-card points:
+#  the drag corridor is a diagonal — it crosses rail 1 near its MAX end and
+#  rail 2 near its CENTER; each rail has its own narrow band of bad
+#  translations, and the band moves toward the negative end as the rail
+#  index grows. Single cards outside their rail's band are recoverable.)
 # Changed vs sample_config.yaml (trial_3 base):
-#   nic_rail_1.entity_present: False -> True ("nic_card_1", translation -0.0215)
-# Legal bounds check: nic_rail translation -0.0215 inside -0.0215..0.0234 (at min)
-# NOTE: verify visually that the card stands close to sc_port_1's descent
-#   line; if it sits far from the port, report the gap and the rail choice
-#   moves (rail 2 or 3) in the next iteration.
+#   nic_rail_1.entity_present: False -> True ("nic_card_1", translation 0.0234)
+#   nic_rail_2.entity_present: False -> True ("nic_card_2", translation 0.0)
+# Legal bounds check: 0.0234 at max of -0.0215..0.0234; 0.0 inside bounds
+# NOTE: verify visually that the two cards bracket the plug-to-port diagonal
+#   with no clear lane between them.
 
 scoring:
   topics:
@@ -77,12 +81,18 @@ trials:
             entity_present: True
             entity_name: "nic_card_1"
             entity_pose:
-              translation: -0.0215
+              translation: 0.0234
               roll: 0.0
               pitch: 0.0
               yaw: 0.0
           nic_rail_2:
-            entity_present: False
+            entity_present: True
+            entity_name: "nic_card_2"
+            entity_pose:
+              translation: 0.0
+              roll: 0.0
+              pitch: 0.0
+              yaw: 0.0
           nic_rail_3:
             entity_present: False
           nic_rail_4:
