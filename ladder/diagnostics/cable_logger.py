@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import time
 from pathlib import Path
 from typing import TextIO
 
@@ -34,58 +35,60 @@ class CableLogger(Node):
         self._record_timer = None
         self.exit_code = 0
 
-        self._startup_timer = self.create_timer(3.0, self._check_precondition)
+        self._startup_deadline = time.monotonic() + 30.0
+        self._startup_timer = self.create_timer(0.25, self._check_precondition)
 
     def _check_precondition(self) -> None:
-        """Check all required frames after one finite delay."""
-        self._startup_timer.cancel()
+        """Wait for all required frames for a finite time."""
         raw_frame_yaml = self._tf_buffer.all_frames_as_yaml()
-        # Example: "base_link:\n  parent: 'world'\ncable_1/link_1:..."
-
         frame_map = yaml.safe_load(raw_frame_yaml) or {}
-        # Example: {"base_link": {...}, "cable_1/link_1": {...}}
-
         frame_names = list(frame_map)
-        # Example: ["base_link", "gripper/tcp", "cable_1/link_1"]
 
         prefix = f"{self._cable_name}/link_"
-        # Example: "cable_1/link_"
-
         cable_frames = [
             frame
             for frame in frame_names
             if frame.startswith(prefix) and frame[len(prefix):].isdigit()
         ]
-        # Example: ["cable_1/link_2", "cable_1/link_1"]
 
         self._cable_frames = sorted(
             cable_frames,
             key=lambda frame: int(frame[len(prefix):]),
         )
-        # Example: ["cable_1/link_1", "cable_1/link_2"]
+        deadline_expired = time.monotonic() >= self._startup_deadline
 
         if not self._cable_frames:
-            self.get_logger().error("ground_truth is not true — cable frames "
-                                    "are missing")
+            if not deadline_expired:
+                return
+
+            self._startup_timer.cancel()
+            self.get_logger().error(
+                "ground_truth is not true — cable frames are missing"
+            )
             self.exit_code = 1
             rclpy.shutdown()
             return
 
-        required_frames = [self._tcp_frame, self._plug_frame, 
-                           *self._cable_frames]
-        # Example: ["gripper/tcp", "cable_1/sc_tip_link", "cable_1/link_1", 
-        #           "cable_1/link_2"]
-
+        required_frames = [
+            self._tcp_frame,
+            self._plug_frame,
+            *self._cable_frames,
+        ]
         missing_frames = [
             frame
             for frame in required_frames
             if not self._tf_buffer.can_transform(
-                self._world_frame, frame, Time()
+                self._world_frame,
+                frame,
+                Time(),
             )
         ]
-        # A success gives []. An error can give ["cable_1/sc_tip_link"].
 
         if missing_frames:
+            if not deadline_expired:
+                return
+
+            self._startup_timer.cancel()
             self.get_logger().error(
                 f"Required TF frames are missing: {missing_frames}"
             )
@@ -93,8 +96,14 @@ class CableLogger(Node):
             rclpy.shutdown()
             return
 
+        self._startup_timer.cancel()
+
         if not self._open_output():
             return
+
+        self.get_logger().info(
+            f"Write cable data to {self._output_path}"
+        )
         self._record_timer = self.create_timer(0.1, self._record_tick)
 
     def _lookup_transform(self, target_frame: str, source_frame: str

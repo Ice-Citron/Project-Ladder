@@ -6,10 +6,12 @@ Use the plug frame from the active scenario, and stop the logger with `Ctrl+C` a
 
 ```bash
 # SC task
-pixi run python ../../ladder/diagnostics/cable_logger.py \
-  /tmp/cable_sc.jsonl --plug-frame cable_1/sc_tip_link
+pixi run python ./ladder/diagnostics/cable_logger.py \
+  --output_path /tmp/cable_sc.jsonl \
+  --plug-frame cable_1/sc_tip_link
 
 # SFP task
-pixi run python ../../ladder/diagnostics/cable_logger.py \
-  /tmp/cable_sfp.jsonl --plug-frame cable_0/sfp_tip_link
+pixi run python ./ladder/diagnostics/cable_logger.py \
+  --output_path /tmp/cable_sfp.jsonl \
+  --plug-frame cable_0/sfp_tip_link
 ```
