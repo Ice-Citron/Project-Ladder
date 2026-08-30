@@ -13,7 +13,7 @@ import threading
 import time
 from pathlib import Path
 
-from errors import EvalRunnerError
+from ladder.eval.rangers_evaluator.src.errors import EvalRunnerError
 
 TEARDOWN_NOISE_PATTERNS = (
     "Physics.cc:3188",

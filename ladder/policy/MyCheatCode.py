@@ -42,7 +42,7 @@ from rclpy.duration import Duration
 from rclpy.time import Time
 from tf2_ros import TransformException
 
-from ladder.guarded_insertion_recovery import (
+from ladder.policy.guarded_insertion_recovery import (
     GuardedInsertionRecoveryConfig,
     GuardedInsertionRecoverySupervisor,
 )

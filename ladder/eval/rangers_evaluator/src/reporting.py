@@ -8,7 +8,7 @@ from typing import Any
 
 import yaml
 
-from errors import EvalRunnerError
+from ladder.eval.rangers_evaluator.src.errors import EvalRunnerError
 
 
 def load_scoring(path: Path) -> dict[str, Any]:

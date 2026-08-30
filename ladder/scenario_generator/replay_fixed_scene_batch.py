@@ -9,7 +9,7 @@ import shlex
 from datetime import datetime
 from pathlib import Path
 
-from generate_fixed_scene_batch import (
+from ladder.scenario_generator.generate_fixed_scene_batch import (
     MODE_SPECS,
     OUTPUT_ROOT,
     SceneVariant,
