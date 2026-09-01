@@ -8,8 +8,7 @@ The system is a **perception-driven ladder** (giving us inspiration for the name
 
 ---
 
-## Why a 'ladder' (the thesis)
-
+## Why a 'ladder' 
 Two measurements we made ourselves, side by side (toolkit commit `66af77f`,
 sample config, 3 trials):
 
