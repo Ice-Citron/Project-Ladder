@@ -147,12 +147,16 @@ class CableLogger(Node):
             tcp_to_plug = self._lookup_transform(
                 self._tcp_frame, self._plug_frame
             )
-            cable_link_z = {
-                frame: self._lookup_transform(
+            cable_link_xyz = {}
+            for frame in self._cable_frames:
+                translation = self._lookup_transform(
                     self._world_frame, frame
-                ).translation.z
-                for frame in self._cable_frames
-            }
+                ).translation
+                cable_link_xyz[frame] = {
+                    "x": translation.x,
+                    "y": translation.y,
+                    "z": translation.z,
+                }
         except TransformException as error:
             self.get_logger().warning(f"Skip incomplete TF tick: {error}")
             return
@@ -167,7 +171,7 @@ class CableLogger(Node):
             "plug_tip_pose": self._serialize_transform(plug_pose),
             "tcp_pose": self._serialize_transform(tcp_pose),
             "tcp_to_plug_tip": self._serialize_transform(tcp_to_plug),
-            "cable_link_z": cable_link_z,
+            "cable_link_xyz": cable_link_xyz,
         }
         self._write_record(record)
 
